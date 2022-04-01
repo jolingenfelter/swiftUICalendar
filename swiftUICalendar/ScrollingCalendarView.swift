@@ -20,7 +20,11 @@ struct ScrollingCalendarView<InMonthDay: View,
     private let footer: (Date) -> Footer
 
     private var months: [Date] {
-        return calendar.generateDates(within: interval, components: DateComponents(day: 1, hour: 0, minute: 0, second: 0))
+        return calendar.generateDates(within: interval,
+                                      components: DateComponents(day: 1,
+                                                                 hour: 0,
+                                                                 minute: 0,
+                                                                 second: 0))
     }
 
     init(interval: DateInterval,
@@ -52,19 +56,10 @@ struct ScrollingCalendarView<InMonthDay: View,
             }
         }
     }
-
-    private func makeDates() -> [(month: Date, days: [Date])] {
-        calendar.generateDates(within: interval,
-                               components: DateComponents(day: 1,
-                                                          hour: 0,
-                                                          minute: 0,
-                                                          second: 0))
-            .map { ($0, calendar.days(for: $0))}
-    }
 }
 
-//struct CalendarView_Previews: PreviewProvider {
+//struct ScrollingCalendarView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        CalendarView()
+//        ScrollingCalendarView()
 //    }
 //}
