@@ -7,16 +7,19 @@
 
 import SwiftUI
 
-struct MonthView<DateView>: View where DateView: View {
+struct MonthView<DayViews: View, TrailingDayViews: View>: View {
     @Environment(\.calendar) var calendar
 
     let month: Date
-    let content: (Date) -> DateView
+    let dayViews: (Date) -> DayViews
+    let trailingDayViews: (Date) -> TrailingDayViews
 
     init(month: Date,
-         @ViewBuilder content: @escaping (Date) -> DateView) {
+         @ViewBuilder dayViews: @escaping (Date) -> DayViews,
+         @ViewBuilder trailingDayViews: @escaping (Date) -> TrailingDayViews) {
         self.month = month
-        self.content = content
+        self.dayViews = dayViews
+        self.trailingDayViews = trailingDayViews
     }
 
     var body: some View {
@@ -24,7 +27,9 @@ struct MonthView<DateView>: View where DateView: View {
 
         VStack {
             ForEach(weeks, id: \.self) { week in
-                WeekView(week: week, content: self.content)
+                WeekView(week: week,
+                         dayViews: self.dayViews,
+                         trailingDayViews: self.trailingDayViews)
             }
         }
     }

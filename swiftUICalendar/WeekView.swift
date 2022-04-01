@@ -7,16 +7,19 @@
 
 import SwiftUI
 
-struct WeekView<DateView>: View where DateView: View {
+struct WeekView<DayView: View, TrailingDayView: View>: View {
     @Environment(\.calendar) var calendar
 
     let week: Date
-    let content: (Date) -> DateView
+    let dayViews: (Date) -> DayView
+    let trailingDayViews: (Date) -> TrailingDayView
 
     init(week: Date,
-         @ViewBuilder content: @escaping (Date) -> DateView) {
+         @ViewBuilder dayViews: @escaping (Date) -> DayView,
+         @ViewBuilder trailingDayViews: @escaping (Date) -> TrailingDayView) {
         self.week = week
-        self.content = content
+        self.dayViews = dayViews
+        self.trailingDayViews = trailingDayViews
     }
 
     var body: some View {
@@ -25,9 +28,9 @@ struct WeekView<DateView>: View where DateView: View {
             ForEach(days, id: \.self) { day in
                 HStack {
                     if self.calendar.isDate(self.week, equalTo: day, toGranularity: .month) {
-                        self.content(day)
+                        self.dayViews(day)
                     } else {
-                        self.content(day).hidden()
+                        self.trailingDayViews(day)
                     }
                 }
             }

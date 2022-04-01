@@ -7,20 +7,23 @@
 
 import SwiftUI
 
-struct CalendarView<DateView: View>: View {
+struct CalendarView<DayView: View, TrailingDayView: View>: View {
     @Environment(\.calendar) var calendar
 
     private let interval: DateInterval
-    private let content: (Date) -> DateView
+    private let dayViews: (Date) -> DayView
+    private let trailingDayViews: (Date) -> TrailingDayView
 
     private var months: [Date] {
         return calendar.generateDates(within: interval, components: DateComponents(day: 1, hour: 0, minute: 0, second: 0))
     }
 
     init(interval: DateInterval,
-         @ViewBuilder content: @escaping (Date) -> DateView ){
+         @ViewBuilder dayViews: @escaping (Date) -> DayView,
+         @ViewBuilder trailingDayViews: @escaping(Date) -> TrailingDayView){
         self.interval = interval
-        self.content = content
+        self.dayViews = dayViews
+        self.trailingDayViews = trailingDayViews
     }
 
     var body: some View {
@@ -28,7 +31,9 @@ struct CalendarView<DateView: View>: View {
             VStack {
                 ForEach(months, id: \.self) { month in
                     Section {
-                        MonthView(month: month, content: self.content)
+                        MonthView(month: month,
+                                  dayViews: self.dayViews,
+                                  trailingDayViews: self.trailingDayViews)
                     } header: {
                         VStack {
                             Spacer(minLength: 15)

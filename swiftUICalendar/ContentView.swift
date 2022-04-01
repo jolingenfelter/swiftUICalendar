@@ -28,7 +28,16 @@ struct ContentView: View {
                     .overlay(
                         Text(String(ContentView.calendar.component(.day, from: date)))
                     )
-            } 
+            } trailingDayViews: { date in
+                Text("30")
+                    .hidden()
+                    .padding(8)
+                    .foregroundColor(.gray)
+                    .padding(.vertical, 4)
+                    .overlay(
+                        Text(String(ContentView.calendar.component(.day, from: date)))
+                    )
+            }
         }
     }
 }
