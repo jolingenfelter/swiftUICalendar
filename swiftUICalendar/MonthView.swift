@@ -13,10 +13,6 @@ struct MonthView<DateView>: View where DateView: View {
     let month: Date
     let content: (Date) -> DateView
 
-    private var weeks: [Date] {
-        return generateWeeks()
-    }
-
     init(month: Date,
          @ViewBuilder content: @escaping (Date) -> DateView) {
         self.month = month
@@ -24,23 +20,13 @@ struct MonthView<DateView>: View where DateView: View {
     }
 
     var body: some View {
+        let weeks = calendar.generateWeeks(for: month)
+
         VStack {
             ForEach(weeks, id: \.self) { week in
                 WeekView(week: week, content: self.content)
             }
         }
-    }
-
-    private func generateWeeks() -> [Date] {
-        guard let monthInterval = calendar.dateInterval(of: .month, for: month) else {
-            return []
-        }
-
-        return calendar.generateDatesByDay(within: monthInterval,
-                                           components: DateComponents(hour: 0,
-                                                                      minute: 0,
-                                                                      second: 0,
-                                                                      weekday: calendar.firstWeekday))
     }
 }
 

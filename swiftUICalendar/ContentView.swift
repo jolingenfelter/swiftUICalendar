@@ -16,7 +16,6 @@ struct ContentView: View {
     }
     private let year = DateInterval(start: today, end: oneYearFromToday)
 
-
     var body: some View {
         NavigationView {
             CalendarView(interval: year) { date in
@@ -29,8 +28,7 @@ struct ContentView: View {
                     .overlay(
                         Text(String(ContentView.calendar.component(.day, from: date)))
                     )
-
-            }
+            } 
         }
     }
 }

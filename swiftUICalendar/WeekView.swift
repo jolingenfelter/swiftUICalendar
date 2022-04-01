@@ -13,10 +13,6 @@ struct WeekView<DateView>: View where DateView: View {
     let week: Date
     let content: (Date) -> DateView
 
-    private var days: [Date] {
-        return generateDays()
-    }
-
     init(week: Date,
          @ViewBuilder content: @escaping (Date) -> DateView) {
         self.week = week
@@ -24,6 +20,7 @@ struct WeekView<DateView>: View where DateView: View {
     }
 
     var body: some View {
+        let days = calendar.generateWeekDays(for: week)
         HStack {
             ForEach(days, id: \.self) { day in
                 HStack {
@@ -35,15 +32,6 @@ struct WeekView<DateView>: View where DateView: View {
                 }
             }
         }
-    }
-
-    func generateDays() -> [Date] {
-        guard let weekInterval = calendar.dateInterval(of: .weekOfYear, for: week) else {
-            return []
-        }
-
-        return calendar.generateDatesByDay(within: weekInterval,
-                                           components: DateComponents(hour: 0, minute: 0, second: 0))
     }
 }
 
