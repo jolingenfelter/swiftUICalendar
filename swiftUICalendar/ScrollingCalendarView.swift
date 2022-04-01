@@ -1,5 +1,5 @@
 //
-//  CalendarView.swift
+//  ScrollingCalendarView.swift
 //  swiftUICalendar
 //
 //  Created by Joanna Lingenfelter on 3/30/22.
@@ -7,12 +7,17 @@
 
 import SwiftUI
 
-struct CalendarView<InMonthDay: View, TrailingDay: View>: View {
+struct ScrollingCalendarView<InMonthDay: View,
+                        TrailingDay: View,
+                        Header: View,
+                        Footer: View>: View {
     @Environment(\.calendar) var calendar
 
     private let interval: DateInterval
     private let dayViews: (Date) -> InMonthDay
     private let trailingDayViews: (Date) -> TrailingDay
+    private let header: (Date) -> Header
+    private let footer: (Date) -> Footer
 
     private var months: [Date] {
         return calendar.generateDates(within: interval, components: DateComponents(day: 1, hour: 0, minute: 0, second: 0))
@@ -20,10 +25,14 @@ struct CalendarView<InMonthDay: View, TrailingDay: View>: View {
 
     init(interval: DateInterval,
          @ViewBuilder dayViews: @escaping (Date) -> InMonthDay,
-         @ViewBuilder trailingDayViews: @escaping(Date) -> TrailingDay){
+         @ViewBuilder trailingDayViews: @escaping (Date) -> TrailingDay,
+         @ViewBuilder header: @escaping (Date) -> Header,
+         @ViewBuilder footer: @escaping (Date) -> Footer){
         self.interval = interval
         self.dayViews = dayViews
         self.trailingDayViews = trailingDayViews
+        self.header = header
+        self.footer = footer
     }
 
     var body: some View {
@@ -35,14 +44,9 @@ struct CalendarView<InMonthDay: View, TrailingDay: View>: View {
                                   dayViews: self.dayViews,
                                   trailingDayViews: self.trailingDayViews)
                     } header: {
-                        VStack {
-                            Spacer(minLength: 15)
-                            Text(DateFormatter.monthFormatter.string(from: month))
-                                .font(.headline)
-                                .foregroundColor(.green)
-                        }
+                        self.header(month)
                     } footer: {
-                        Spacer(minLength: 15)
+                        self.footer(month)
                     }
                 }
             }

@@ -18,7 +18,7 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            CalendarView(interval: year) { date in
+            ScrollingCalendarView(interval: year) { date in
                 Text("30")
                     .hidden()
                     .padding(8)
@@ -37,6 +37,12 @@ struct ContentView: View {
                     .overlay(
                         Text(String(ContentView.calendar.component(.day, from: date)))
                     )
+            } header: { month in
+                Text(DateFormatter.monthFormatter.string(from: month))
+                    .foregroundColor(.green)
+                    .font(.largeTitle).bold()
+            } footer: { _ in
+                Spacer(minLength: 30)
             }
         }
     }
