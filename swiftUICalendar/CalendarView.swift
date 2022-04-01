@@ -7,20 +7,20 @@
 
 import SwiftUI
 
-struct CalendarView<DayView: View, TrailingDayView: View>: View {
+struct CalendarView<InMonthDay: View, TrailingDay: View>: View {
     @Environment(\.calendar) var calendar
 
     private let interval: DateInterval
-    private let dayViews: (Date) -> DayView
-    private let trailingDayViews: (Date) -> TrailingDayView
+    private let dayViews: (Date) -> InMonthDay
+    private let trailingDayViews: (Date) -> TrailingDay
 
     private var months: [Date] {
         return calendar.generateDates(within: interval, components: DateComponents(day: 1, hour: 0, minute: 0, second: 0))
     }
 
     init(interval: DateInterval,
-         @ViewBuilder dayViews: @escaping (Date) -> DayView,
-         @ViewBuilder trailingDayViews: @escaping(Date) -> TrailingDayView){
+         @ViewBuilder dayViews: @escaping (Date) -> InMonthDay,
+         @ViewBuilder trailingDayViews: @escaping(Date) -> TrailingDay){
         self.interval = interval
         self.dayViews = dayViews
         self.trailingDayViews = trailingDayViews

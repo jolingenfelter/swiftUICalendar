@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct MonthView<DayViews: View, TrailingDayViews: View>: View {
+struct MonthView<InMonthDay: View, TrailingDay: View>: View {
     @Environment(\.calendar) var calendar
 
     let month: Date
-    let dayViews: (Date) -> DayViews
-    let trailingDayViews: (Date) -> TrailingDayViews
+    let dayViews: (Date) -> InMonthDay
+    let trailingDayViews: (Date) -> TrailingDay
 
     init(month: Date,
-         @ViewBuilder dayViews: @escaping (Date) -> DayViews,
-         @ViewBuilder trailingDayViews: @escaping (Date) -> TrailingDayViews) {
+         @ViewBuilder dayViews: @escaping (Date) -> InMonthDay,
+         @ViewBuilder trailingDayViews: @escaping (Date) -> TrailingDay) {
         self.month = month
         self.dayViews = dayViews
         self.trailingDayViews = trailingDayViews

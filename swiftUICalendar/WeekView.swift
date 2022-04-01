@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct WeekView<DayView: View, TrailingDayView: View>: View {
+struct WeekView<InMonthDay: View, TrailingDay: View>: View {
     @Environment(\.calendar) var calendar
 
     let week: Date
-    let dayViews: (Date) -> DayView
-    let trailingDayViews: (Date) -> TrailingDayView
+    let dayViews: (Date) -> InMonthDay
+    let trailingDayViews: (Date) -> TrailingDay
 
     init(week: Date,
-         @ViewBuilder dayViews: @escaping (Date) -> DayView,
-         @ViewBuilder trailingDayViews: @escaping (Date) -> TrailingDayView) {
+         @ViewBuilder dayViews: @escaping (Date) -> InMonthDay,
+         @ViewBuilder trailingDayViews: @escaping (Date) -> TrailingDay) {
         self.week = week
         self.dayViews = dayViews
         self.trailingDayViews = trailingDayViews
