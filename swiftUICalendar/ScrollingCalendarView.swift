@@ -13,26 +13,20 @@ struct ScrollingCalendarView<InMonthDay: View,
                         Footer: View>: View {
     @Environment(\.calendar) var calendar
 
-    private let interval: DateInterval
+    @ObservedObject var dataStore: DataStore
+
     private let dayViews: (Date) -> InMonthDay
     private let trailingDayViews: (Date) -> TrailingDay
     private let header: (Date) -> Header
     private let footer: (Date) -> Footer
 
-    private var months: [Date] {
-        return calendar.generateDates(within: interval,
-                                      components: DateComponents(day: 1,
-                                                                 hour: 0,
-                                                                 minute: 0,
-                                                                 second: 0))
-    }
-
-    init(interval: DateInterval,
+    
+    init(dataStore: DataStore,
          @ViewBuilder dayViews: @escaping (Date) -> InMonthDay,
          @ViewBuilder trailingDayViews: @escaping (Date) -> TrailingDay,
          @ViewBuilder header: @escaping (Date) -> Header,
          @ViewBuilder footer: @escaping (Date) -> Footer){
-        self.interval = interval
+        self.dataStore = dataStore
         self.dayViews = dayViews
         self.trailingDayViews = trailingDayViews
         self.header = header
@@ -41,12 +35,15 @@ struct ScrollingCalendarView<InMonthDay: View,
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            VStack {
-                ForEach(months, id: \.self) { month in
+            LazyVStack {
+                ForEach(dataStore.months, id: \.self) { month in
                     Section {
                         MonthView(month: month,
                                   dayViews: self.dayViews,
                                   trailingDayViews: self.trailingDayViews)
+                        .onAppear() {
+                            dataStore.loadMoreMonthsIfNeeded(currentDate: month)
+                        }
                     } header: {
                         self.header(month)
                     } footer: {

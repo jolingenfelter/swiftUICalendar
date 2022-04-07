@@ -16,6 +16,7 @@
 		636AD2AB27F4CE3A0050EBB3 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD2AA27F4CE3A0050EBB3 /* MonthView.swift */; };
 		636AD2AD27F4CF920050EBB3 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD2AC27F4CF920050EBB3 /* WeekView.swift */; };
 		639C2CBD27F626E400A93354 /* DateFormatter+Formats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639C2CBC27F626E400A93354 /* DateFormatter+Formats.swift */; };
+		63D5012B27F78A51000C9856 /* ScrollingCalendarDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D5012A27F78A51000C9856 /* ScrollingCalendarDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		636AD2AA27F4CE3A0050EBB3 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
 		636AD2AC27F4CF920050EBB3 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		639C2CBC27F626E400A93354 /* DateFormatter+Formats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Formats.swift"; sourceTree = "<group>"; };
+		63D5012A27F78A51000C9856 /* ScrollingCalendarDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingCalendarDataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				636AD2A627F4CAD80050EBB3 /* ScrollingCalendarView.swift */,
 				636AD2AA27F4CE3A0050EBB3 /* MonthView.swift */,
 				636AD2AC27F4CF920050EBB3 /* WeekView.swift */,
+				63D5012A27F78A51000C9856 /* ScrollingCalendarDataStore.swift */,
 				636AD2A827F4CC3B0050EBB3 /* Calendar+Helpers.swift */,
 				639C2CBC27F626E400A93354 /* DateFormatter+Formats.swift */,
 				636AD29C27F4CA4C0050EBB3 /* Assets.xcassets */,
@@ -154,6 +157,7 @@
 			files = (
 				636AD2AD27F4CF920050EBB3 /* WeekView.swift in Sources */,
 				636AD29B27F4CA490050EBB3 /* ContentView.swift in Sources */,
+				63D5012B27F78A51000C9856 /* ScrollingCalendarDataStore.swift in Sources */,
 				636AD2AB27F4CE3A0050EBB3 /* MonthView.swift in Sources */,
 				636AD2A927F4CC3B0050EBB3 /* Calendar+Helpers.swift in Sources */,
 				636AD29927F4CA490050EBB3 /* swiftUICalendarApp.swift in Sources */,

@@ -14,6 +14,12 @@ extension DateFormatter {
         return formatter
     }()
 
+    static var monthYearFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter
+    }()
+
     static var monthDayYear: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"

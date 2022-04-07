@@ -9,16 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.calendar) static var calendar
+    @StateObject var dataStore: DataStore
 
-    private static let today = Date()
-    private static var oneYearFromToday: Date {
-        return calendar.date(byAdding: .year, value: 1, to: today)!
+    init() {
+        _dataStore = StateObject(wrappedValue: DataStore(calendar: ContentView.calendar))
     }
-    private let year = DateInterval(start: today, end: oneYearFromToday)
 
     var body: some View {
         NavigationView {
-            ScrollingCalendarView(interval: year) { date in
+            ScrollingCalendarView(dataStore: dataStore) { date in
                 Text("30")
                     .hidden()
                     .padding(8)
@@ -38,7 +37,7 @@ struct ContentView: View {
                         Text(String(ContentView.calendar.component(.day, from: date)))
                     )
             } header: { month in
-                Text(DateFormatter.monthFormatter.string(from: month))
+                Text(DateFormatter.monthYearFormatter.string(from: month))
                     .foregroundColor(.green)
                     .font(.largeTitle).bold()
             } footer: { _ in

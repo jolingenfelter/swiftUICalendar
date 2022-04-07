@@ -28,6 +28,18 @@ extension Calendar {
         return dates
     }
 
+    func generateMonths(within year: Date) -> [Date] {
+        guard let yearInterval = dateInterval(of: .year, for: year) else {
+            return []
+        }
+
+        return generateDates(within: yearInterval,
+                             components: DateComponents(day: 1,
+                                                        hour: 0,
+                                                        minute: 0,
+                                                        second: 0))
+    }
+
     func days(for month: Date) -> [Date] {
         guard let monthInterval = dateInterval(of: .month, for: month),
               let monthFirstWeek = dateInterval(of: .weekOfMonth, for: monthInterval.start),
