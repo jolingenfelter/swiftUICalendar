@@ -11,8 +11,6 @@ struct ScrollingCalendarView<InMonthDay: View,
                         TrailingDay: View,
                         Header: View,
                         Footer: View>: View {
-    @Environment(\.calendar) var calendar
-
     @ObservedObject var dataStore: DataStore
 
     private let dayViews: (Date) -> InMonthDay
@@ -38,7 +36,8 @@ struct ScrollingCalendarView<InMonthDay: View,
             LazyVStack {
                 ForEach(dataStore.months, id: \.self) { month in
                     Section {
-                        MonthView(month: month,
+                        MonthView(dataStore: dataStore,
+                                  month: month,
                                   dayViews: self.dayViews,
                                   trailingDayViews: self.trailingDayViews)
                         .onAppear() {

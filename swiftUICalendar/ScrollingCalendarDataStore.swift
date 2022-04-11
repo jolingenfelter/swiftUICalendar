@@ -40,4 +40,12 @@ class DataStore: ObservableObject {
         let nextYearInMonths = calendar.generateMonths(within: oneYearFromStartDate)
         months.append(contentsOf: nextYearInMonths)
     }
+
+    func weeks(for month: Date) -> [Date] {
+        return calendar.generateWeeks(for: month)
+    }
+
+    func days(for week: Date) -> [Date] {
+        return calendar.generateWeekDays(for: week)
+    }
 }

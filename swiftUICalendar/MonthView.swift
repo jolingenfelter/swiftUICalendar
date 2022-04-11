@@ -8,26 +8,27 @@
 import SwiftUI
 
 struct MonthView<InMonthDay: View, TrailingDay: View>: View {
-    @Environment(\.calendar) var calendar
+    @ObservedObject var dataStore: DataStore
 
     let month: Date
     let dayViews: (Date) -> InMonthDay
     let trailingDayViews: (Date) -> TrailingDay
 
-    init(month: Date,
+    init(dataStore: DataStore,
+         month: Date,
          @ViewBuilder dayViews: @escaping (Date) -> InMonthDay,
          @ViewBuilder trailingDayViews: @escaping (Date) -> TrailingDay) {
+        self.dataStore = dataStore
         self.month = month
         self.dayViews = dayViews
         self.trailingDayViews = trailingDayViews
     }
 
     var body: some View {
-        let weeks = calendar.generateWeeks(for: month)
-
         VStack {
-            ForEach(weeks, id: \.self) { week in
-                WeekView(week: week,
+            ForEach(dataStore.weeks(for: month), id: \.self) { week in
+                WeekView(dataStore: dataStore,
+                         week: week,
                          dayViews: self.dayViews,
                          trailingDayViews: self.trailingDayViews)
             }
